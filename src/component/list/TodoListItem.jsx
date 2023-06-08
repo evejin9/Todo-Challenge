@@ -3,13 +3,13 @@ import styled from "styled-components";
 import { BsCheckCircleFill, BsCheckCircle  } from "react-icons/bs";
 
 const Wrapper = styled.div`
-  width: 500px;
-  margin: 0 auto;
-  border-radius: 4px;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #d5d5d5;
   `;
 
-const TodoItem = styled.div`  
-  background-color: #fff;
+const TodoList = styled.div`  
   height: 40px;
   font-size: 12px;
   display: flex;
@@ -23,18 +23,24 @@ const CheckBox = styled.div`
   align-items: center;
 
   svg {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: ${props => props.checked && '#9fc93c'};
   }
 `;
 
+const Text = styled.div`
+  padding: 0.5rem;
+  margin-left: 0.5rem;
+  flex: 1;
+`;
 
 function TodoListItem(props) {
   return (
     <Wrapper>
-      <TodoItem>
-        <CheckBox></CheckBox>
-      </TodoItem>
+      <TodoList>
+        <CheckBox><BsCheckCircle /></CheckBox>
+        <Text>ㅎㅇ</Text>
+      </TodoList>
     </Wrapper>
   );
 }
