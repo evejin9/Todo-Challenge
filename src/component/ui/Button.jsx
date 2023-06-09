@@ -2,12 +2,12 @@ import React from 'react';
 import styled from "styled-components";
 
 const ButtonStyle = styled.button`
-  background-color: #9fc93c;
+  background-color: #b7e055;
   padding: 5px 15px;
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 0.9rem;
+  font-weight: 600;
   border: 1px;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
 `;
 
@@ -16,7 +16,7 @@ function Button(props) {
 
   return (
     <div>
-      <ButtonStyle>{title}</ButtonStyle>
+      <ButtonStyle width>{title}</ButtonStyle>
     </div>
   );
 }
