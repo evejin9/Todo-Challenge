@@ -1,6 +1,6 @@
 import React from 'react';
-import TodoListItem from './TodoListItem';
 import styled from "styled-components";
+import TodoListItem from './TodoListItem';
 
 const TodoListWrapper = styled.div`
   min-height: 400px;
@@ -8,9 +8,15 @@ const TodoListWrapper = styled.div`
 `;
 
 function TodoList(props) {
+  const { todos, onToggle, onRemove } = props;
+
   return (
     <TodoListWrapper>
-      <TodoListItem />
+      {todos.map((todo) => {
+        return (
+          <TodoListItem key={todo.id} todo={todo} onToggle={onToggle} onRemove={onRemove} />
+        )})
+      }
     </TodoListWrapper>
   );
 }

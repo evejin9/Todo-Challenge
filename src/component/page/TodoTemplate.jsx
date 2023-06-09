@@ -1,7 +1,5 @@
 import React from 'react';
 import styled from "styled-components";
-import TodoList from '../list/TodoList';
-import { MdAddCircleOutline, MdAddCircle  } from "react-icons/md";
 
 const Wrapper = styled.div`
   background-color: #fff;
@@ -22,25 +20,11 @@ const Wrapper = styled.div`
   }
 `;
 
-const AddButton = styled.div`
-  padding: 1rem;
-  cursor: pointer;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-
-  svg {
-    font-size: 1.5rem;
-    color: ${props => props.checked && '#7d9c36'};
-  };
-`;
-
 function TodoTemplate(props) {
   return (
     <Wrapper>
-      <div className='app-title'>Todo List</div>
-      <TodoList className='content' />
-      <AddButton><MdAddCircleOutline /></AddButton>
+      <div className='app-title'>Todo List ✔️</div>
+      {props.children}
     </Wrapper>
   );
 }
