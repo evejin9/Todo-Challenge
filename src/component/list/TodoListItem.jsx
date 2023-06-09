@@ -24,9 +24,9 @@ const CheckBox = styled.div`
 
   svg {
     font-size: 1rem;
-    color: ${props => props.checked ? '#000' : '#8fa758'};
+    color: ${props => props.checked ? '#8fa758' :  '#000'};
     &:hover {
-      color: ${props => props.checked ? '#7d9c36' : '#000'};
+      color: ${props => props.checked ? '#000' : '#7d9c36'};
     }
   };
 `;
@@ -46,8 +46,8 @@ const DeleteBox = styled.div`
 `;
 
 const Text = styled.div`
-  color: ${props => props.checked ? '#000' : '#929292'};
-  text-decoration: ${props => props.checked ? 'none' : 'line-through'};
+  color: ${props => props.checked ? '#929292' : '#000'};
+  text-decoration: ${props => props.checked ? 'line-through' : 'none'};
   font-size: 13px;
   padding: 0.5rem;
   margin-left: 0.5rem;
@@ -63,7 +63,7 @@ function TodoListItem(props) {
         <CheckBox checked={todo.checked}
           onClick={() => { onToggle(todo.id) }}
         >
-          {todo.checked ? <BsCheckCircle />:<BsCheckCircleFill />}
+          {todo.checked ? <BsCheckCircleFill /> : <BsCheckCircle />}
         </CheckBox>
         <Text checked={todo.checked}>{todo.text}</Text>
         <DeleteBox onClick={() => {onRemove(todo.id)}}><BsFillTrashFill /></DeleteBox>
