@@ -1,15 +1,14 @@
 import styled, { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useCallback } from "react";
 import { IoIosAddCircleOutline, IoIosCloseCircle  } from "react-icons/io";
 
 import TodoTemplate from "./component/page/TodoTemplate";
 import TodoList from "./component/list/TodoList";
-import TodoAddModal from "./component/list/TodoAddModal";
 
 
-
+// 스타일
 const GlobalStyle = createGlobalStyle`
   ${reset}
   
@@ -43,6 +42,7 @@ const Text = styled.div`
   align-items: center;
 `;
 
+// todo 배열
 const todoListArray = [
   {
     id: 1,
@@ -81,11 +81,27 @@ function App() {
 
   const doingArray = todos.filter((todo) => todo.checked === false);
 
+  const nextId = useRef(todos.length);
+
+  const handleTodoInput = useCallback((text) => {
+    const todo = {
+      id: nextId.current + 1,
+      text,
+      checked: false,
+      pin: false,
+    };
+
+    console.log(todo.id);
+    setTodos(todos => todos.concat(todo));
+
+    nextId.current += 1;
+  })
+
   return (
     <>
       <GlobalStyle />
       <TodoTemplate>
-        <TodoList todos={todos} onToggle={handleToggle} onRemove={handleRemove} showModal={showModal} />
+        <TodoList todos={todos} onToggle={handleToggle} onRemove={handleRemove} showModal={showModal} onTodoInput={handleTodoInput}  />
         {/* 추가 버튼 */}
         <AddButton onClick={() => {
           setShowModal(!showModal);
