@@ -33,7 +33,7 @@ const TodoAddInput = styled.input`
 // `
 
 function TodoAddModal(props) {
-  const { onTodoInput, setShowModal } = props;
+  const { onTodoInput, setShowAddModal } = props;
   const [todoAddInput, setTodoAddInput] = useState('');
   
   const handleTodoInput = (e) => {
@@ -43,7 +43,7 @@ function TodoAddModal(props) {
   const handleSubmit = (e) => {
     onTodoInput(todoAddInput);
     setTodoAddInput('');
-    setShowModal(true);
+    setShowAddModal(false);
 
     e.preventDefault();
   }

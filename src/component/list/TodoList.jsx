@@ -9,12 +9,12 @@ const TodoListWrapper = styled.div`
 `;
 
 function TodoList(props) {
-  const { todos, onToggle, onRemove, showModal, setShowModal, onTodoInput, handlePin } = props;
+  const { todos, onToggle, onRemove, showAddModal, setShowAddModal, onTodoInput, handlePin } = props;
 
   return (
     <TodoListWrapper>
-      {showModal 
-        ? (<TodoAddModal onTodoInput={onTodoInput} setShowModal={setShowModal} />)
+      {showAddModal 
+        ? (<TodoAddModal onTodoInput={onTodoInput} setShowAddModal={setShowAddModal} />)
         : (
           <>
             <div>

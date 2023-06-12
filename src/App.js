@@ -3,11 +3,11 @@ import reset from "styled-reset";
 import { useRef, useState } from "react";
 import { useCallback } from "react";
 import { IoIosAddCircleOutline, IoIosCloseCircle  } from "react-icons/io";
-import { BiSortDown, BiSortUp } from "react-icons/";
+import { BsSortDown, BsSortUp } from "react-icons/bs";
 
 import TodoTemplate from "./component/page/TodoTemplate";
 import TodoList from "./component/list/TodoList";
-import { BsSortDown, BsSortUp } from "react-icons/bs";
+import TodoEditModal from "./component/list/TodoEditModal";
 
 
 // 스타일
@@ -16,6 +16,7 @@ const GlobalStyle = createGlobalStyle`
   
   body {
     background: #FFFFDE;
+    position: relative;
   }
 `;
 
@@ -91,7 +92,7 @@ const todoListArray = [
 
 function App() {
   const [todos, setTodos] = useState(todoListArray);
-  const [showModal, setShowModal] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
   const [handleSortButton, setHandleSortButton] = useState(false);
 
   const handleToggle = useCallback((id) => {
@@ -152,15 +153,16 @@ function App() {
             {handleSortButton ? <BsSortDown /> : <BsSortUp />}
           </SortButton>
         </Header>
-        <TodoList todos={todos} onToggle={handleToggle} onRemove={handleRemove} showModal={showModal} setShowModal={setShowModal} onTodoInput={handleTodoInput} handlePin={handlePin}  />
+        <TodoList todos={todos} onToggle={handleToggle} onRemove={handleRemove} showAddModal={showAddModal} setShowAddModal={setShowAddModal} onTodoInput={handleTodoInput} handlePin={handlePin}  />
         {/* 추가 버튼 */}
         <AddButton onClick={() => {
-          setShowModal(!showModal);
+          setShowAddModal(!showAddModal);
         }}>
-          {showModal ? <IoIosCloseCircle /> : <IoIosAddCircleOutline />}
+          {showAddModal ? <IoIosCloseCircle /> : <IoIosAddCircleOutline />}
         </AddButton>
         <Text> 완료: {doneArray.length}개, 미완료: {doingArray.length}개</Text>
       </TodoTemplate>
+      <TodoEditModal />
     </>
   );
 }
