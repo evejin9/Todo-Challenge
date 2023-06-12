@@ -3,9 +3,11 @@ import reset from "styled-reset";
 import { useRef, useState } from "react";
 import { useCallback } from "react";
 import { IoIosAddCircleOutline, IoIosCloseCircle  } from "react-icons/io";
+import { BiSortDown, BiSortUp } from "react-icons/";
 
 import TodoTemplate from "./component/page/TodoTemplate";
 import TodoList from "./component/list/TodoList";
+import { BsSortDown, BsSortUp } from "react-icons/bs";
 
 
 // 스타일
@@ -17,15 +19,15 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const AddButton = styled.div`
-  padding: 1rem;
+const SortButton = styled.div`
+  padding: 10px 14px 10px;
   cursor: pointer;
   display: flex;
   justify-content: flex-end;
   align-items: center;
 
   svg {
-    font-size: 1.5rem;
+    font-size: 1rem;
     color: ${props => props.checked && '#7d9c36'};
   };
 
@@ -34,13 +36,35 @@ const AddButton = styled.div`
   }
 `;
 
+const AddButton = styled.div`
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  
+  svg {
+    font-size: 1.5rem;
+    color: ${props => props.checked && '#7d9c36'};
+    cursor: pointer;
+    
+    &:hover {
+      color: #628315;
+    }
+  };
+`;
+
 const Text = styled.div`
   padding: 1rem;
-  font-size: 0.5rem;
+  font-size: 0.7rem;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
 
 // todo 배열
 const todoListArray = [
@@ -68,10 +92,17 @@ const todoListArray = [
 function App() {
   const [todos, setTodos] = useState(todoListArray);
   const [showModal, setShowModal] = useState(false);
+  const [handleSortButton, setHandleSortButton] = useState(false);
 
   const handleToggle = useCallback((id) => {
     setTodos(todos => todos.map((todo) => 
       todo.id === id ? { ...todo, checked: !todo.checked } : todo
+    ))
+  }, []);
+
+  const handlePin = useCallback((id) => {
+    setTodos(todos => todos.map((todo) => 
+      todo.id === id ? { ...todo, pin: !todo.pin } : todo
     ))
   }, []);
 
@@ -80,6 +111,7 @@ function App() {
   }, []);
 
   const doingArray = todos.filter((todo) => todo.checked === false);
+  const doneArray = todos.filter((todo) => todo.checked === true);
 
   const nextId = useRef(todos.length);
 
@@ -101,14 +133,33 @@ function App() {
     <>
       <GlobalStyle />
       <TodoTemplate>
-        <TodoList todos={todos} onToggle={handleToggle} onRemove={handleRemove} showModal={showModal} onTodoInput={handleTodoInput}  />
+        <Header>
+          <Text>할 일 {todos.length}개</Text>
+          <SortButton onClick={() => {
+            setHandleSortButton(!handleSortButton);
+            if (handleSortButton){
+              setTodos(todos.sort((a, b) => {
+                if (a.text > b.text) return -1;
+                return 0;
+              }))
+            } else {
+              setTodos(todos.sort((a, b) => {
+                if (a.text < b.text) return -1;
+                return 0;
+              }))
+            }
+          }}>
+            {handleSortButton ? <BsSortDown /> : <BsSortUp />}
+          </SortButton>
+        </Header>
+        <TodoList todos={todos} onToggle={handleToggle} onRemove={handleRemove} showModal={showModal} setShowModal={setShowModal} onTodoInput={handleTodoInput} handlePin={handlePin}  />
         {/* 추가 버튼 */}
         <AddButton onClick={() => {
           setShowModal(!showModal);
         }}>
           {showModal ? <IoIosCloseCircle /> : <IoIosAddCircleOutline />}
         </AddButton>
-        <Text>현재 해야 할 일이 {doingArray.length}개 남았네요!</Text>
+        <Text> 완료: {doneArray.length}개, 미완료: {doingArray.length}개</Text>
       </TodoTemplate>
     </>
   );

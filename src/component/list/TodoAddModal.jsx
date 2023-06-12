@@ -18,8 +18,22 @@ const TodoAddInput = styled.input`
   border-radius: 8px;
   `;
 
+// const DateInput = styled.div`
+//   width: 100%;
+//   display: flex;
+//   justify-content: flex-start;
+
+//   .Date {
+//     color: #a5a1a1;
+//     margin: 1rem;
+//     padding: 5px;
+//     border: 1px solid #d5d5d5;
+//     border-radius: 8px;
+//   }
+// `
+
 function TodoAddModal(props) {
-  const { onTodoInput } = props;
+  const { onTodoInput, setShowModal } = props;
   const [todoAddInput, setTodoAddInput] = useState('');
   
   const handleTodoInput = (e) => {
@@ -29,6 +43,7 @@ function TodoAddModal(props) {
   const handleSubmit = (e) => {
     onTodoInput(todoAddInput);
     setTodoAddInput('');
+    setShowModal(false);
 
     e.preventDefault();
   }
@@ -40,6 +55,13 @@ function TodoAddModal(props) {
         placeholder='할 일을 적어주세요'
         value={todoAddInput}
         onChange={handleTodoInput}/>
+
+      {/* <DateInput>
+        <label>
+          <input type="date" className='Date' />
+        </label>
+      </DateInput> */}
+
       <Button title='추가' 
         onClick={() => onTodoInput} 
         disabled={todoAddInput === '' ? true : false} 

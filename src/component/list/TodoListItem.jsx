@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
-import { BsCheckCircleFill, BsCheckCircle, BsFillTrashFill, BsPinAngleFill, BsPinAngle   } from "react-icons/bs";
+import { BsCheckCircleFill, BsCheckCircle, BsFillTrashFill, BsPinAngleFill, BsPinAngle, BsFillPencilFill } from "react-icons/bs";
 
 const Wrapper = styled.div`
   padding: 1rem;
@@ -61,6 +61,21 @@ const PinBox = styled.div`
   }
 `;
 
+const EditBox = styled.div`
+  padding: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+
+  svg {
+    font-size: 0.9rem;
+  }
+
+  &:hover {
+    color: #8fa758;
+  }
+`
+
 const Text = styled.div`
   color: ${props => props.checked ? '#929292' : '#000'};
   text-decoration: ${props => props.checked ? 'line-through' : 'none'};
@@ -68,12 +83,11 @@ const Text = styled.div`
   padding: 0.5rem;
   margin-left: 0.5rem;
   flex: 1;
+  cursor: pointer;
 `;
 
 function TodoListItem(props) {
-  const { todo, onToggle, onRemove } = props;
-  const [pin, setPin] = useState(false);
-
+  const { todo, onToggle, onRemove, handlePin } = props;
 
   return (
     <Wrapper>
@@ -83,12 +97,13 @@ function TodoListItem(props) {
         >
           {todo.checked ? <BsCheckCircleFill /> : <BsCheckCircle />}
         </CheckBox>
-        <Text checked={todo.checked}>{todo.text}</Text>
-        <PinBox pin={pin}
-          onClick={() => setPin(!pin)}
+        <Text checked={todo.checked}> {todo.text}</Text>
+        <PinBox pin={todo.pin}
+          onClick={() => { handlePin(todo.id) }}
         >
-          {pin ? <BsPinAngleFill /> : <BsPinAngle />}
+          {todo.pin ? <BsPinAngleFill /> : <BsPinAngle />}
         </PinBox>
+        <EditBox><BsFillPencilFill/></EditBox>
         <DeleteBox onClick={() => {onRemove(todo.id)}}><BsFillTrashFill /></DeleteBox>
       </TodoList>
     </Wrapper>
