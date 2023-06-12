@@ -43,7 +43,7 @@ function TodoAddModal(props) {
   const handleSubmit = (e) => {
     onTodoInput(todoAddInput);
     setTodoAddInput('');
-    setShowModal(false);
+    setShowModal(true);
 
     e.preventDefault();
   }

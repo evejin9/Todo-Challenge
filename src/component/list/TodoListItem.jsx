@@ -62,7 +62,7 @@ const PinBox = styled.div`
 `;
 
 const EditBox = styled.div`
-  padding: 1rem;
+  padding: 1rem 1rem 1rem 0;
   cursor: pointer;
   display: flex;
   align-items: center;
