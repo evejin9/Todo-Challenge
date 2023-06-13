@@ -87,7 +87,7 @@ const Text = styled.div`
 `;
 
 function TodoListItem(props) {
-  const { todo, onToggle, onRemove, handlePin } = props;
+  const { todo, onToggle, onRemove, handlePin, showEditModal, setShowEditModal, handleEditInput } = props;
 
   return (
     <Wrapper>
@@ -103,7 +103,13 @@ function TodoListItem(props) {
         >
           {todo.pin ? <BsPinAngleFill /> : <BsPinAngle />}
         </PinBox>
-        <EditBox><BsFillPencilFill/></EditBox>
+        <EditBox 
+          onClick={() => {
+            setShowEditModal(!showEditModal); 
+            handleEditInput(todo.id);
+          }}>
+          <BsFillPencilFill/>
+        </EditBox>
         <DeleteBox onClick={() => {onRemove(todo.id)}}><BsFillTrashFill /></DeleteBox>
       </TodoList>
     </Wrapper>

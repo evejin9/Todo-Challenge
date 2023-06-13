@@ -9,7 +9,7 @@ const TodoListWrapper = styled.div`
 `;
 
 function TodoList(props) {
-  const { todos, onToggle, onRemove, showAddModal, setShowAddModal, onTodoInput, handlePin } = props;
+  const { todos, onToggle, onRemove, showAddModal, setShowAddModal, onTodoInput, handlePin, showEditModal, setShowEditModal, handleEditInput } = props;
 
   return (
     <TodoListWrapper>
@@ -20,21 +20,21 @@ function TodoList(props) {
             <div>
               {todos.filter((todo => todo.pin === true && todo.checked === false)).map((todo) => {
                 return (
-                  <TodoListItem key={todo.id} todo={todo} onToggle={onToggle} onRemove={onRemove} handlePin={handlePin} />
+                  <TodoListItem key={todo.id} todo={todo} onToggle={onToggle} onRemove={onRemove} handlePin={handlePin} showEditModal={showEditModal} setShowEditModal={setShowEditModal} handleEditInput={handleEditInput} />
                 )
               })}
             </div>
             <div>
               {todos.filter((todo => todo.pin === false && todo.checked === false)).map((todo) => {
                 return (
-                <TodoListItem key={todo.id} todo={todo} onToggle={onToggle} onRemove={onRemove} handlePin={handlePin} />
+                <TodoListItem key={todo.id} todo={todo} onToggle={onToggle} onRemove={onRemove} handlePin={handlePin} showEditModal={showEditModal} setShowEditModal={setShowEditModal} handleEditInput={handleEditInput} />
                 )
               })}
             </div>
             <div>
               {todos.filter((todo => todo.checked === true)).map((todo) => {
                 return (
-                <TodoListItem key={todo.id} todo={todo} onToggle={onToggle} onRemove={onRemove} handlePin={handlePin} />
+                <TodoListItem key={todo.id} todo={todo} onToggle={onToggle} onRemove={onRemove} handlePin={handlePin} showEditModal={showEditModal} setShowEditModal={setShowEditModal} handleEditInput={handleEditInput} />
                 )
               })}
             </div>

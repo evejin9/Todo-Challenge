@@ -3,7 +3,7 @@ import reset from "styled-reset";
 import { useRef, useState } from "react";
 import { useCallback } from "react";
 import { IoIosAddCircleOutline, IoIosCloseCircle  } from "react-icons/io";
-import { BsSortDown, BsSortUp } from "react-icons/bs";
+import { BsSortDown, BsSortUp, BsMoonFill, BsSun } from "react-icons/bs";
 
 import TodoTemplate from "./component/page/TodoTemplate";
 import TodoList from "./component/list/TodoList";
@@ -15,7 +15,8 @@ const GlobalStyle = createGlobalStyle`
   ${reset}
   
   body {
-    background: #FFFFDE;
+    background: ${ props => props.dark ? '#747474' : '#ffffde'};
+    /* color: ${ props => props.dark ? 'white' : 'black'}; */
     position: relative;
   }
 `;
@@ -37,6 +38,11 @@ const SortButton = styled.div`
   }
 `;
 
+const ButtonArea = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const AddButton = styled.div`
   padding: 1rem;
   display: flex;
@@ -45,6 +51,23 @@ const AddButton = styled.div`
   
   svg {
     font-size: 1.5rem;
+    color: ${props => props.checked && '#7d9c36'};
+    cursor: pointer;
+    
+    &:hover {
+      color: #628315;
+    }
+  };
+`;
+
+const ThemeButton = styled.div`
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  
+  svg {
+    font-size: 1.2rem;
     color: ${props => props.checked && '#7d9c36'};
     cursor: pointer;
     
@@ -94,6 +117,13 @@ function App() {
   const [todos, setTodos] = useState(todoListArray);
   const [showAddModal, setShowAddModal] = useState(false);
   const [handleSortButton, setHandleSortButton] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editInputText, setEditInputText] = useState('');
+  const [darkTheme, setDarkTheme] = useState(false);
+
+  // 현재 선택한 투두의 id값을 저장하는 상태
+  // 현재 선택한 투두를 저장하는 상태
+  const [selectedTodo, setSelectedTodo] = useState({});
 
   const handleToggle = useCallback((id) => {
     setTodos(todos => todos.map((todo) => 
@@ -109,6 +139,22 @@ function App() {
 
   const handleRemove = useCallback((id) => {
     setTodos(todos => todos.filter((todo) => todo.id !== id));
+  }, []);
+
+  const handleEditInput = useCallback((id) => {
+    console.log(id);
+    
+    // setTodos(todos => todos.find)
+    const targetTodo = todos.find((todo) => {
+      return todo.id === id;
+    });
+
+    setEditInputText(targetTodo.text);
+    setSelectedTodo(targetTodo);
+  }, []);
+
+  const updateInput = useCallback((text) => {
+    setSelectedTodo(selectedTodo.text = text);
   }, []);
 
   const doingArray = todos.filter((todo) => todo.checked === false);
@@ -128,11 +174,11 @@ function App() {
     setTodos(todos => todos.concat(todo));
 
     nextId.current += 1;
-  })
+  },[])
 
   return (
     <>
-      <GlobalStyle />
+      <GlobalStyle dark={darkTheme} />
       <TodoTemplate>
         <Header>
           <Text>할 일 {todos.length}개</Text>
@@ -153,16 +199,24 @@ function App() {
             {handleSortButton ? <BsSortDown /> : <BsSortUp />}
           </SortButton>
         </Header>
-        <TodoList todos={todos} onToggle={handleToggle} onRemove={handleRemove} showAddModal={showAddModal} setShowAddModal={setShowAddModal} onTodoInput={handleTodoInput} handlePin={handlePin}  />
-        {/* 추가 버튼 */}
-        <AddButton onClick={() => {
-          setShowAddModal(!showAddModal);
-        }}>
-          {showAddModal ? <IoIosCloseCircle /> : <IoIosAddCircleOutline />}
-        </AddButton>
+        <TodoList todos={todos} onToggle={handleToggle} onRemove={handleRemove} showAddModal={showAddModal} setShowAddModal={setShowAddModal} onTodoInput={handleTodoInput} handlePin={handlePin} showEditModal={showEditModal} setShowEditModal={setShowEditModal} handleEditInput={handleEditInput}  />
+        <ButtonArea>
+          <ThemeButton onClick={() => {
+            setDarkTheme(!darkTheme);
+          }}>
+            {darkTheme ? <BsMoonFill /> : <BsSun />}
+          </ThemeButton>
+
+          {/* 추가 버튼 */}
+          <AddButton onClick={() => {
+            setShowAddModal(!showAddModal);
+          }}>
+            {showAddModal ? <IoIosCloseCircle /> : <IoIosAddCircleOutline />}
+          </AddButton>
+        </ButtonArea>
         <Text> 완료: {doneArray.length}개, 미완료: {doingArray.length}개</Text>
       </TodoTemplate>
-      <TodoEditModal />
+      {showEditModal && <TodoEditModal selectedTodo={selectedTodo} showEditModal={showEditModal} setShowEditModal={setShowEditModal} updateInput={updateInput} />}
     </>
   );
 }
