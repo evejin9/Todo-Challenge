@@ -57,9 +57,8 @@ const CloseButton = styled.div`
 `
 
 function TodoEditModal(props) {
-  const { selectedTodo, showEditModal, setShowEditModal, updateInput } = props;
-  console.log(selectedTodo);
-  // console.log(todos[0].text);
+  const { selectedTodo, showEditModal, setShowEditModal, updateInput, setSelectedTodo } = props;
+  // console.log(selectedTodo);
 
   const [editText, setEditText] = useState(selectedTodo.text);
 
@@ -70,8 +69,8 @@ function TodoEditModal(props) {
   };
 
   const handleSubmit = (e) => { 
-    showEditModal(false);
-
+    setShowEditModal(false);
+    setSelectedTodo(selectedTodo.text = editText);
     e.preventDefault();
   }
 

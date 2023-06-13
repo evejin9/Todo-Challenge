@@ -142,19 +142,18 @@ function App() {
   }, []);
 
   const handleEditInput = useCallback((id) => {
-    console.log(id);
-    
     // setTodos(todos => todos.find)
     const targetTodo = todos.find((todo) => {
       return todo.id === id;
     });
+    
+    console.log(targetTodo);
 
     setEditInputText(targetTodo.text);
     setSelectedTodo(targetTodo);
   }, []);
 
-  const updateInput = useCallback((text) => {
-    setSelectedTodo(selectedTodo.text = text);
+  const updateInput = useCallback(() => {
   }, []);
 
   const doingArray = todos.filter((todo) => todo.checked === false);
@@ -175,6 +174,8 @@ function App() {
 
     nextId.current += 1;
   },[])
+
+
 
   return (
     <>
@@ -216,7 +217,7 @@ function App() {
         </ButtonArea>
         <Text> 완료: {doneArray.length}개, 미완료: {doingArray.length}개</Text>
       </TodoTemplate>
-      {showEditModal && <TodoEditModal selectedTodo={selectedTodo} showEditModal={showEditModal} setShowEditModal={setShowEditModal} updateInput={updateInput} />}
+      {showEditModal && <TodoEditModal selectedTodo={selectedTodo} showEditModal={showEditModal} setShowEditModal={setShowEditModal} updateInput={updateInput} setSelectedTodo={setSelectedTodo} />}
     </>
   );
 }
