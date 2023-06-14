@@ -16,7 +16,7 @@ const GlobalStyle = createGlobalStyle`
   
   body {
     background: ${ props => props.dark ? '#747474' : '#ffffde'};
-    /* color: ${ props => props.dark ? 'white' : 'black'}; */
+    color: ${ props => props.dark ? 'white' : 'black'};
     position: relative;
   }
 `;
@@ -78,6 +78,7 @@ const ThemeButton = styled.div`
 `;
 
 const Text = styled.div`
+  color: ${props => props.dark ? '#fff' : '#000'};
   padding: 1rem;
   font-size: 0.7rem;
   display: flex;
@@ -151,7 +152,7 @@ function App() {
 
     setEditInputText(targetTodo.text);
     setSelectedTodo(targetTodo);
-  }, []);
+  }, [todos]);
 
   const updateInput = useCallback(() => {
   }, []);
@@ -169,7 +170,6 @@ function App() {
       pin: false,
     };
 
-    console.log(todo.id);
     setTodos(todos => todos.concat(todo));
 
     nextId.current += 1;
@@ -180,9 +180,9 @@ function App() {
   return (
     <>
       <GlobalStyle dark={darkTheme} />
-      <TodoTemplate>
+      <TodoTemplate dark={darkTheme} >
         <Header>
-          <Text>할 일 {todos.length}개</Text>
+          <Text dark={darkTheme}>할 일 {todos.length}개</Text>
           <SortButton onClick={() => {
             setHandleSortButton(!handleSortButton);
             if (handleSortButton){
@@ -200,7 +200,7 @@ function App() {
             {handleSortButton ? <BsSortDown /> : <BsSortUp />}
           </SortButton>
         </Header>
-        <TodoList todos={todos} onToggle={handleToggle} onRemove={handleRemove} showAddModal={showAddModal} setShowAddModal={setShowAddModal} onTodoInput={handleTodoInput} handlePin={handlePin} showEditModal={showEditModal} setShowEditModal={setShowEditModal} handleEditInput={handleEditInput}  />
+        <TodoList todos={todos} onToggle={handleToggle} onRemove={handleRemove} showAddModal={showAddModal} setShowAddModal={setShowAddModal} onTodoInput={handleTodoInput} handlePin={handlePin} showEditModal={showEditModal} setShowEditModal={setShowEditModal} handleEditInput={handleEditInput} dark={darkTheme}  />
         <ButtonArea>
           <ThemeButton onClick={() => {
             setDarkTheme(!darkTheme);
@@ -215,7 +215,7 @@ function App() {
             {showAddModal ? <IoIosCloseCircle /> : <IoIosAddCircleOutline />}
           </AddButton>
         </ButtonArea>
-        <Text> 완료: {doneArray.length}개, 미완료: {doingArray.length}개</Text>
+        <Text dark={darkTheme}> 완료: {doneArray.length}개, 미완료: {doingArray.length}개</Text>
       </TodoTemplate>
       {showEditModal && <TodoEditModal selectedTodo={selectedTodo} showEditModal={showEditModal} setShowEditModal={setShowEditModal} updateInput={updateInput} setSelectedTodo={setSelectedTodo} />}
     </>

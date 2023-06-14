@@ -2,7 +2,7 @@ import React from 'react';
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  background-color: #fff;
+  background-color: ${props => props.dark ? '#000' : '#fff'};
   width: 500px;
   margin: 0 auto;
   margin-top: 10rem;
@@ -21,8 +21,10 @@ const Wrapper = styled.div`
 `;
 
 function TodoTemplate(props) {
+  const { dark } = props;
+
   return (
-    <Wrapper>
+    <Wrapper dark={dark}>
       <div className='app-title'>Todo List ✔️</div>
       {props.children}
     </Wrapper>

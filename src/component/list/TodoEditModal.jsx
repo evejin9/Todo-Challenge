@@ -74,6 +74,7 @@ function TodoEditModal(props) {
     e.preventDefault();
   }
 
+  // 투두의 id값을 저장했을 경우
   // useEffect(() => {
   //   const targetTodo = todos.find(todo => todo.id === currentId);
   //   setEditText(targetTodo.text);
@@ -93,6 +94,8 @@ function TodoEditModal(props) {
           />
           <Button title='수정'
             onClick={() => updateInput}
+            disabled={editText === selectedTodo.text ? true : false}
+            backGroundColor={ editText === selectedTodo.text ? '#dbdbdb' : '#a5c951'}
           />
         </InputArea>
       </ModalArea>
