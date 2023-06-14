@@ -79,7 +79,8 @@ const EditBox = styled.div`
 `
 
 const Text = styled.div`
-  color: ${props => props.checked ? '#929292' : '#000'} && ${props => props.dark ? '#fff': '#000'};
+  color: ${props => props.checked ? '#929292' : '#000'};
+  /* color: ${props => props.dark ? '#fff': '#000'}; */
   text-decoration: ${props => props.checked ? 'line-through' : 'none'};
   font-size: 13px;
   padding: 0.5rem;
