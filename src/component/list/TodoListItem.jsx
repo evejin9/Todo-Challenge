@@ -25,6 +25,7 @@ const CheckBox = styled.div`
   svg {
     font-size: 1rem;
     color: ${props => props.checked ? '#8fa758' :  '#000'};
+    /* color: ${props => props.dark && props.checked ? '#8fa758' : '#fff'}; */
     &:hover {
       color: ${props => props.checked ? '#000' : '#7d9c36'};
     }
@@ -47,6 +48,7 @@ const DeleteBox = styled.div`
 
 const PinBox = styled.div`
   color: ${props => props.pin ? '#526624' :'transparent'};
+  /* color: ${props => props.dark && props.pin ? '#fff' :'transparent'} ; */
   padding: 1rem;
   cursor: pointer;
   display: flex;
@@ -57,7 +59,7 @@ const PinBox = styled.div`
   }
 
   &:hover {
-    color: #073a22;
+    color: ${props => props.dark ? '#fff' : '#073a22'};
   }
 `;
 
@@ -77,7 +79,7 @@ const EditBox = styled.div`
 `
 
 const Text = styled.div`
-  color: ${props => props.checked ? '#929292' : '#000'} ${props => props.dark ? '#fff': '#000'};
+  color: ${props => props.checked ? '#929292' : '#000'} && ${props => props.dark ? '#fff': '#000'};
   text-decoration: ${props => props.checked ? 'line-through' : 'none'};
   font-size: 13px;
   padding: 0.5rem;
@@ -87,19 +89,21 @@ const Text = styled.div`
 `;
 
 function TodoListItem(props) {
-  const { todo, onToggle, onRemove, handlePin, showEditModal, setShowEditModal, handleEditInput } = props;
+  const { todo, onToggle, onRemove, handlePin, showEditModal, setShowEditModal, handleEditInput, dark } = props;
 
   return (
     <Wrapper>
       <TodoList>
         <CheckBox checked={todo.checked}
           onClick={() => { onToggle(todo.id) }}
+          dark={dark}
         >
           {todo.checked ? <BsCheckCircleFill /> : <BsCheckCircle />}
         </CheckBox>
         <Text checked={todo.checked}> {todo.text}</Text>
         <PinBox pin={todo.pin}
           onClick={() => { handlePin(todo.id) }}
+          dark={dark}
         >
           {todo.pin ? <BsPinAngleFill /> : <BsPinAngle />}
         </PinBox>

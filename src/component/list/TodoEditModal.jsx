@@ -47,7 +47,7 @@ const CloseButton = styled.div`
 
   svg {
     font-size: 1.5rem;
-    color: red;
+    /* color: red; */
     cursor: pointer;
     
     &:hover {
