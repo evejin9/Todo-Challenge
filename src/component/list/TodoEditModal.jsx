@@ -66,7 +66,7 @@ const EditDateInput = styled.input`
 `;
 
 function TodoEditModal(props) {
-  const { selectedTodo, showEditModal, setShowEditModal, updateInput, setSelectedTodo, dark } = props;
+  const { selectedTodo, showEditModal, setShowEditModal, setSelectedTodo, dark } = props;
 
   const [editText, setEditText] = useState(selectedTodo.text);
   const [editDate, setEditDate] = useState(selectedTodo.date);
@@ -114,9 +114,7 @@ function TodoEditModal(props) {
             onChange={handleDateInput}
           />
           <Button title='수정'
-            onClick={() => updateInput}
             disabled={editText === selectedTodo.text && editDate === selectedTodo.date ? true : false}
-            // disabled={editDate === inputDate ? true : false}
             backGroundColor={ editText === selectedTodo.text && editDate === selectedTodo.date ? '#dbdbdb' : '#a5c951'}
           />
         </InputArea>

@@ -109,7 +109,7 @@ const todoListArray = [
   },
   {
     id: 3,
-    text: '연고 사오기',
+    text: '전시회 다녀오기',
     date: '2023-07-01',
     checked: false,
     pin: false,
@@ -123,8 +123,8 @@ function App() {
   const [handleSortButton, setHandleSortButton] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [editInputText, setEditInputText] = useState('');
-  const [darkTheme, setDarkTheme] = useState(false);
   const [inputDate, setInputDate] = useState('');
+  const [darkTheme, setDarkTheme] = useState(false);
 
   // 현재 선택한 투두의 id값을 저장하는 상태
   // 현재 선택한 투두를 저장하는 상태
@@ -157,9 +157,6 @@ function App() {
     setEditInputText(targetTodo.text);
     setSelectedTodo(targetTodo);
   }, [todos]);
-
-  const updateInput = useCallback(() => {
-  }, []);
 
   const doingArray = todos.filter((todo) => todo.checked === false);
   const doneArray = todos.filter((todo) => todo.checked === true);
@@ -241,7 +238,6 @@ function App() {
           selectedTodo={selectedTodo} 
           showEditModal={showEditModal} 
           setShowEditModal={setShowEditModal} 
-          updateInput={updateInput} 
           setSelectedTodo={setSelectedTodo} 
           dark={darkTheme} 
         />}
