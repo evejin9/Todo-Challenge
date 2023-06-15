@@ -15,42 +15,28 @@ const TodoList = styled.div`
   font-size: 12px;
   display: flex;
   align-items: center;
-
-  .d-day {
-    font-size: 12px;
-    color: #285a3e;
-    font-weight: 800;
-  }
 `;
 
 const CheckBox = styled.div`
   cursor: pointer;
   display: flex;
   align-items: center;
-
+  
   svg {
     font-size: 1rem;
-    /* color: ${props => props.checked && '#8fa758'}; */
     color: ${props => props.checked ? '#8fa758' : props => props.dark ? '#fff' : '#000'};
     &:hover {
-    color: ${props => props.checked ? props => props.dark ? '#fff' : '#000' : '#8fa758'};
+      color: ${props => props.checked ? props => props.dark ? '#fff' : '#000' : '#8fa758'};
     }
   };
 `;
 
-const DeleteBox = styled.div`
-  cursor: pointer;
-  display: flex;
-  align-items: center;
+const D_day = styled.div`
+  font-size: 12px;
+  color: ${props => props.dark ? '#fff': '#285a3e' };
+  font-weight: 800;
+`
 
-  svg {
-    font-size: 0.9rem;
-  }
-
-  &:hover {
-    color: #8b1515;
-  }
-`;
 
 const PinBox = styled.div`
   color: ${props => props.pin ? '#799141' :'transparent'};
@@ -58,30 +44,44 @@ const PinBox = styled.div`
   cursor: pointer;
   display: flex;
   align-items: center;
-
+  
   svg{
     font-size: 1rem;
   }
-
+  
   &:hover {
     color: ${props => props.dark ? '#fff' : '#073a22'};
   }
-`;
+  `;
 
 const EditBox = styled.div`
   padding: 1rem 1rem 1rem 0;
   cursor: pointer;
   display: flex;
   align-items: center;
-
+  
   svg {
     font-size: 0.9rem;
   }
-
+  
   &:hover {
     color: #8fa758;
   }
-`
+  `
+
+  const DeleteBox = styled.div`
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  
+    svg {
+      font-size: 0.9rem;
+    }
+  
+    &:hover {
+      color: #8b1515;
+    }
+  `;
 
 const Text = styled.div`
   color: ${props => props.checked && '#929292'};
@@ -95,7 +95,6 @@ const Text = styled.div`
   cursor: pointer;
 
   .date {
-    color: ${props => props.dark && '#fff'};
     margin-top: 7px;
     font-size: 9px;
   }
@@ -105,7 +104,7 @@ function TodoListItem(props) {
   const { todo, onToggle, onRemove, handlePin, showEditModal, setShowEditModal, handleEditInput, dark, setInputDate } = props;
 
   const today = new Date();
-  
+
   const newDay = new Date(todo.date);
   // const newDayMonth = newDay.getMonth();
   // const newDayYear = newDay.getFullYear();
@@ -138,9 +137,9 @@ function TodoListItem(props) {
             {todo.date}
           </div>
         </Text>
-        <div className='d-day' dark={dark}>
-          {result > 0 ? `D-${result}` : `D+${-1 * result}`} 
-        </div>
+        <D_day dark={dark}>
+          {result > 0 ? `D-${result}` : `D+${-1 * result}`}   
+        </D_day>
         <PinBox pin={todo.pin}
           onClick={() => { handlePin(todo.id) }}
           dark={dark}
