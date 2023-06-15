@@ -2,6 +2,7 @@ import React from 'react';
 import styled from "styled-components";
 import TodoListItem from './TodoListItem';
 import TodoAddModal from './TodoAddModal';
+import { useState } from 'react';
 
 const TodoListWrapper = styled.div`
   min-height: 400px;
@@ -10,32 +11,69 @@ const TodoListWrapper = styled.div`
 `;
 
 function TodoList(props) {
-  const { todos, onToggle, onRemove, showAddModal, setShowAddModal, onTodoInput, handlePin, showEditModal, setShowEditModal, handleEditInput, dark } = props;
+  const { todos, onToggle, onRemove, showAddModal, setShowAddModal, onTodoInput, handlePin, showEditModal, setShowEditModal, handleEditInput, dark, inputDate, setInputDate } = props;
+  // const [inputDate, setInputDate] = useState('');
+
 
   return (
     <TodoListWrapper dark={dark}>
       {showAddModal 
-        ? (<TodoAddModal onTodoInput={onTodoInput} setShowAddModal={setShowAddModal} />)
+        ? (<TodoAddModal 
+              onTodoInput={onTodoInput} 
+              setShowAddModal={setShowAddModal} 
+              inputDate={inputDate}
+              setInputDate={setInputDate}
+            />)
         : (
           <>
             <div>
               {todos.filter((todo => todo.pin === true && todo.checked === false)).map((todo) => {
                 return (
-                  <TodoListItem key={todo.id} todo={todo} onToggle={onToggle} onRemove={onRemove} handlePin={handlePin} showEditModal={showEditModal} setShowEditModal={setShowEditModal} handleEditInput={handleEditInput} dark={dark} />
+                  <TodoListItem key={todo.id} 
+                    todo={todo} 
+                    onToggle={onToggle}
+                    onRemove={onRemove} 
+                    handlePin={handlePin} 
+                    showEditModal={showEditModal} 
+                    setShowEditModal={setShowEditModal} 
+                    handleEditInput={handleEditInput} 
+                    dark={dark} 
+                    setInputDate={setInputDate}
+                  />
                 )
               })}
             </div>
             <div>
               {todos.filter((todo => todo.pin === false && todo.checked === false)).map((todo) => {
                 return (
-                <TodoListItem key={todo.id} todo={todo} onToggle={onToggle} onRemove={onRemove} handlePin={handlePin} showEditModal={showEditModal} setShowEditModal={setShowEditModal} handleEditInput={handleEditInput} dark={dark} />
+                  <TodoListItem key={todo.id} 
+                  todo={todo} 
+                  onToggle={onToggle}
+                  onRemove={onRemove} 
+                  handlePin={handlePin} 
+                  showEditModal={showEditModal} 
+                  setShowEditModal={setShowEditModal} 
+                  handleEditInput={handleEditInput} 
+                  dark={dark} 
+                  setInputDate={setInputDate}
+                />
                 )
               })}
             </div>
             <div>
               {todos.filter((todo => todo.checked === true)).map((todo) => {
                 return (
-                <TodoListItem key={todo.id} todo={todo} onToggle={onToggle} onRemove={onRemove} handlePin={handlePin} showEditModal={showEditModal} setShowEditModal={setShowEditModal} handleEditInput={handleEditInput} dark={dark} />
+                  <TodoListItem key={todo.id} 
+                  todo={todo} 
+                  onToggle={onToggle}
+                  onRemove={onRemove} 
+                  handlePin={handlePin} 
+                  showEditModal={showEditModal} 
+                  setShowEditModal={setShowEditModal} 
+                  handleEditInput={handleEditInput} 
+                  dark={dark} 
+                  setInputDate={setInputDate}
+                />
                 )
               })}
             </div>

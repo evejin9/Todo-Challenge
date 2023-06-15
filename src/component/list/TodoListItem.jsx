@@ -15,6 +15,12 @@ const TodoList = styled.div`
   font-size: 12px;
   display: flex;
   align-items: center;
+
+  .d-day {
+    font-size: 12px;
+    color: #285a3e;
+    font-weight: 800;
+  }
 `;
 
 const CheckBox = styled.div`
@@ -24,10 +30,10 @@ const CheckBox = styled.div`
 
   svg {
     font-size: 1rem;
-    color: ${props => props.checked ? '#8fa758' :  '#000'};
-    /* color: ${props => props.dark && props.checked ? '#8fa758' : '#fff'}; */
+    /* color: ${props => props.checked && '#8fa758'}; */
+    color: ${props => props.checked ? '#8fa758' : props => props.dark ? '#fff' : '#000'};
     &:hover {
-      color: ${props => props.checked ? '#000' : '#7d9c36'};
+    color: ${props => props.checked ? props => props.dark ? '#fff' : '#000' : '#8fa758'};
     }
   };
 `;
@@ -47,8 +53,7 @@ const DeleteBox = styled.div`
 `;
 
 const PinBox = styled.div`
-  color: ${props => props.pin ? '#526624' :'transparent'};
-  /* color: ${props => props.dark && props.pin ? '#fff' :'transparent'} ; */
+  color: ${props => props.pin ? '#799141' :'transparent'};
   padding: 1rem;
   cursor: pointer;
   display: flex;
@@ -79,18 +84,42 @@ const EditBox = styled.div`
 `
 
 const Text = styled.div`
-  color: ${props => props.checked ? '#929292' : '#000'};
-  /* color: ${props => props.dark ? '#fff': '#000'}; */
+  color: ${props => props.checked && '#929292'};
   text-decoration: ${props => props.checked ? 'line-through' : 'none'};
   font-size: 13px;
   padding: 0.5rem;
   margin-left: 0.5rem;
+  display: flex;
+  flex-direction: column;
   flex: 1;
   cursor: pointer;
+
+  .date {
+    color: ${props => props.dark && '#fff'};
+    margin-top: 7px;
+    font-size: 9px;
+  }
 `;
 
 function TodoListItem(props) {
-  const { todo, onToggle, onRemove, handlePin, showEditModal, setShowEditModal, handleEditInput, dark } = props;
+  const { todo, onToggle, onRemove, handlePin, showEditModal, setShowEditModal, handleEditInput, dark, setInputDate } = props;
+
+  const today = new Date();
+  
+  const newDay = new Date(todo.date);
+  // const newDayMonth = newDay.getMonth();
+  // const newDayYear = newDay.getFullYear();
+  // const newDayDate = newDay.getDate();
+
+
+  // console.log(`나는 ${newDayYear}년 ${newDayMonth}월 ${newDayDate}일까지 해야 합니다 `);
+
+
+  const d_day = newDay.getTime() - today.getTime();
+
+  const result = Math.ceil(d_day / (1000 * 60 * 60 * 24 ));
+  console.log(result);
+  console.log(`d-day: ${ -1 * result}일 남았습니다.`);
 
   return (
     <Wrapper>
@@ -101,7 +130,17 @@ function TodoListItem(props) {
         >
           {todo.checked ? <BsCheckCircleFill /> : <BsCheckCircle />}
         </CheckBox>
-        <Text checked={todo.checked}> {todo.text}</Text>
+        <Text checked={todo.checked}> 
+          <div>
+            {todo.text} 
+          </div>
+          <div className='date'>
+            {todo.date}
+          </div>
+        </Text>
+        <div className='d-day' dark={dark}>
+          {result > 0 ? `D-${result}` : `D+${-1 * result}`} 
+        </div>
         <PinBox pin={todo.pin}
           onClick={() => { handlePin(todo.id) }}
           dark={dark}
@@ -112,6 +151,7 @@ function TodoListItem(props) {
           onClick={() => {
             setShowEditModal(!showEditModal); 
             handleEditInput(todo.id);
+            setInputDate('');
           }}>
           <BsFillPencilFill/>
         </EditBox>

@@ -96,18 +96,21 @@ const todoListArray = [
   {
     id: 1,
     text: '주민등록등본 출력',
+    date: '2023-06-20',
     checked: false,
     pin: false,
   },
   {
     id: 2,
     text: '과자 사오기',
+    date: '2023-05-12',
     checked: true,
     pin: false,
   },
   {
     id: 3,
     text: '연고 사오기',
+    date: '2023-07-01',
     checked: false,
     pin: false,
   },
@@ -121,6 +124,7 @@ function App() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [editInputText, setEditInputText] = useState('');
   const [darkTheme, setDarkTheme] = useState(false);
+  const [inputDate, setInputDate] = useState('');
 
   // 현재 선택한 투두의 id값을 저장하는 상태
   // 현재 선택한 투두를 저장하는 상태
@@ -148,7 +152,7 @@ function App() {
       return todo.id === id;
     });
     
-    console.log(targetTodo);
+    // console.log(targetTodo);
 
     setEditInputText(targetTodo.text);
     setSelectedTodo(targetTodo);
@@ -162,10 +166,11 @@ function App() {
 
   const nextId = useRef(todos.length);
 
-  const handleTodoInput = useCallback((text) => {
+  const handleTodoInput = useCallback((text, date) => {
     const todo = {
       id: nextId.current + 1,
       text,
+      date,
       checked: false,
       pin: false,
     };
@@ -200,7 +205,20 @@ function App() {
             {handleSortButton ? <BsSortDown /> : <BsSortUp />}
           </SortButton>
         </Header>
-        <TodoList todos={todos} onToggle={handleToggle} onRemove={handleRemove} showAddModal={showAddModal} setShowAddModal={setShowAddModal} onTodoInput={handleTodoInput} handlePin={handlePin} showEditModal={showEditModal} setShowEditModal={setShowEditModal} handleEditInput={handleEditInput} dark={darkTheme}  />
+        <TodoList todos={todos} 
+          onToggle={handleToggle} 
+          onRemove={handleRemove} 
+          showAddModal={showAddModal} 
+          setShowAddModal={setShowAddModal} 
+          onTodoInput={handleTodoInput} 
+          handlePin={handlePin} 
+          showEditModal={showEditModal} 
+          setShowEditModal={setShowEditModal}
+          handleEditInput={handleEditInput}
+          dark={darkTheme} 
+          inputDate={inputDate} 
+          setInputDate={setInputDate}  
+        />
         <ButtonArea>
           <ThemeButton onClick={() => {
             setDarkTheme(!darkTheme);
@@ -211,13 +229,22 @@ function App() {
           {/* 추가 버튼 */}
           <AddButton onClick={() => {
             setShowAddModal(!showAddModal);
+            setInputDate('');
           }}>
             {showAddModal ? <IoIosCloseCircle /> : <IoIosAddCircleOutline />}
           </AddButton>
         </ButtonArea>
         <Text dark={darkTheme}> 완료: {doneArray.length}개, 미완료: {doingArray.length}개</Text>
       </TodoTemplate>
-      {showEditModal && <TodoEditModal selectedTodo={selectedTodo} showEditModal={showEditModal} setShowEditModal={setShowEditModal} updateInput={updateInput} setSelectedTodo={setSelectedTodo} />}
+      {showEditModal && 
+        <TodoEditModal 
+          selectedTodo={selectedTodo} 
+          showEditModal={showEditModal} 
+          setShowEditModal={setShowEditModal} 
+          updateInput={updateInput} 
+          setSelectedTodo={setSelectedTodo} 
+          dark={darkTheme} 
+        />}
     </>
   );
 }
