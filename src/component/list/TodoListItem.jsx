@@ -101,7 +101,7 @@ const Text = styled.div`
 `;
 
 function TodoListItem(props) {
-  const { todo, onToggle, onRemove, handlePin, showEditModal, setShowEditModal, handleEditInput, dark, setInputDate } = props;
+  const { todo, onToggle, onRemove, handlePin, showEditModal, setShowEditModal, handleEditInput, dark } = props;
 
   const today = new Date();
 
@@ -150,7 +150,6 @@ function TodoListItem(props) {
           onClick={() => {
             setShowEditModal(!showEditModal); 
             handleEditInput(todo.id);
-            setInputDate('');
           }}>
           <BsFillPencilFill/>
         </EditBox>
@@ -160,4 +159,5 @@ function TodoListItem(props) {
   );
 }
 
-export default TodoListItem;
+// export default TodoListItem;
+export default React.memo(TodoListItem);

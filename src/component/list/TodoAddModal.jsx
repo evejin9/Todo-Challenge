@@ -28,24 +28,29 @@ const AddDateInput = styled.input`
 `;
 
 function TodoAddModal(props) {
-  const { onTodoInput, setShowAddModal, inputDate, setInputDate } = props;
-  const [todoAddInput, setTodoAddInput] = useState('');
+  const { onTodoInput, setShowAddModal } = props;
+
+  const [newTodo, setNewTodo] = useState({
+    newInput: '',
+    newDate: '',
+  });
 
   const handleTodoInput = (e) => {
-    setTodoAddInput(e.target.value);
+    setNewTodo({...newTodo, newInput: e.target.value});
   }
 
   const handleSubmit = (e) => {
-    onTodoInput(todoAddInput, inputDate);
-    setTodoAddInput('');
+    onTodoInput(newTodo.newInput, newTodo.newDate);
     setShowAddModal(false);
-    setInputDate('');
+    // setInputDate('');
+    setNewTodo({...newTodo, newDate: ''});
+    setNewTodo({...newTodo, newInput: ''});
 
     e.preventDefault();
   }
 
   const handleDateInput = (e) => {
-    setInputDate(e.target.value);
+    setNewTodo({...newTodo, newDate: e.target.value});
   }
 
 
@@ -53,20 +58,20 @@ function TodoAddModal(props) {
     <TodoAddModalWrapper onSubmit={handleSubmit}>
       <TodoAddInput type='text'
         placeholder='할 일을 적어주세요'
-        value={todoAddInput}
+        value={newTodo.newInput}
         onChange={handleTodoInput}
       />
 
       <AddDateInput 
         type='date'
-        value={inputDate}
+        value={newTodo.newDate}
         onChange={handleDateInput}
       />
 
       <Button title='추가' 
         onClick={() => onTodoInput} 
-        disabled={(todoAddInput === '') || (inputDate === '')  ? true : false} 
-        backGroundColor={(todoAddInput === '') || (inputDate === '') ? '#dbdbdb' : '#a5c951'}
+        disabled={(newTodo.newInput === '') || (newTodo.newDate === '')  ? true : false} 
+        backGroundColor={(newTodo.newInput === '') || (newTodo.newDate === '') ? '#dbdbdb' : '#a5c951'}
       />
     </TodoAddModalWrapper>
   );

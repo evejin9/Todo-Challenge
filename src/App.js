@@ -119,11 +119,10 @@ const todoListArray = [
 
 function App() {
   const [todos, setTodos] = useState(todoListArray);
-  const [showAddModal, setShowAddModal] = useState(false);
   const [handleSortButton, setHandleSortButton] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [editInputText, setEditInputText] = useState('');
-  const [inputDate, setInputDate] = useState('');
   const [darkTheme, setDarkTheme] = useState(false);
 
   // 현재 선택한 투두의 id값을 저장하는 상태
@@ -202,7 +201,8 @@ function App() {
             {handleSortButton ? <BsSortDown /> : <BsSortUp />}
           </SortButton>
         </Header>
-        <TodoList todos={todos} 
+        <TodoList 
+          todos={todos} 
           onToggle={handleToggle} 
           onRemove={handleRemove} 
           showAddModal={showAddModal} 
@@ -213,8 +213,6 @@ function App() {
           setShowEditModal={setShowEditModal}
           handleEditInput={handleEditInput}
           dark={darkTheme} 
-          inputDate={inputDate} 
-          setInputDate={setInputDate}  
         />
         <ButtonArea>
           <ThemeButton onClick={() => {
@@ -226,7 +224,6 @@ function App() {
           {/* 추가 버튼 */}
           <AddButton onClick={() => {
             setShowAddModal(!showAddModal);
-            setInputDate('');
           }}>
             {showAddModal ? <IoIosCloseCircle /> : <IoIosAddCircleOutline />}
           </AddButton>

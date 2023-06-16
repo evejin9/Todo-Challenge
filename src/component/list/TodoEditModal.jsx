@@ -68,24 +68,27 @@ const EditDateInput = styled.input`
 function TodoEditModal(props) {
   const { selectedTodo, showEditModal, setShowEditModal, setSelectedTodo, dark } = props;
 
-  const [editText, setEditText] = useState(selectedTodo.text);
-  const [editDate, setEditDate] = useState(selectedTodo.date);
+  const [editTodo, setEditTodo] = useState({
+    editText: selectedTodo.text,
+    editDate: selectedTodo.date
+  });
 
-  console.log(editDate);
+  console.log(editTodo.editDate);
 
   const handleEditText = (e) => {
-    setEditText(e.target.value);
+    setEditTodo({...editTodo, editText: e.target.value});
   };
 
   const handleSubmit = (e) => { 
     setShowEditModal(false);
-    setSelectedTodo(selectedTodo.text = editText);
-    setSelectedTodo(selectedTodo.date = editDate);
+    setSelectedTodo(selectedTodo.text = editTodo.editText);
+    setSelectedTodo(selectedTodo.date = editTodo.editDate);
     e.preventDefault();
   }
 
   const handleDateInput = (e) => {
-    setEditDate(e.target.value);
+    // setEditDate(e.target.value);
+    setEditTodo({...editTodo, editDate: e.target.value});
   }
 
   // 투두의 id값을 저장했을 경우
@@ -105,17 +108,17 @@ function TodoEditModal(props) {
         <InputArea>
           <EditTextInput 
             type='text'
-            value={editText}
+            value={editTodo.editText}
             onChange={handleEditText}
           />
           <EditDateInput 
             type='date'
-            value={editDate}
+            value={editTodo.editDate}
             onChange={handleDateInput}
           />
           <Button title='수정'
-            disabled={editText === selectedTodo.text && editDate === selectedTodo.date ? true : false}
-            backGroundColor={ editText === selectedTodo.text && editDate === selectedTodo.date ? '#dbdbdb' : '#a5c951'}
+            disabled={editTodo.editText === selectedTodo.text && editTodo.editDate === selectedTodo.date ? true : false}
+            backGroundColor={ editTodo.editText === selectedTodo.text && editTodo.editDate === selectedTodo.date ? '#dbdbdb' : '#a5c951'}
           />
         </InputArea>
       </ModalArea>

@@ -11,8 +11,7 @@ const TodoListWrapper = styled.div`
 `;
 
 function TodoList(props) {
-  const { todos, onToggle, onRemove, showAddModal, setShowAddModal, onTodoInput, handlePin, showEditModal, setShowEditModal, handleEditInput, dark, inputDate, setInputDate } = props;
-  // const [inputDate, setInputDate] = useState('');
+  const { todos, onToggle, onRemove, showAddModal, setShowAddModal, onTodoInput, handlePin, showEditModal, setShowEditModal, handleEditInput, dark } = props;
 
 
   return (
@@ -21,8 +20,6 @@ function TodoList(props) {
         ? (<TodoAddModal 
               onTodoInput={onTodoInput} 
               setShowAddModal={setShowAddModal} 
-              inputDate={inputDate}
-              setInputDate={setInputDate}
             />)
         : (
           <>
@@ -38,7 +35,6 @@ function TodoList(props) {
                     setShowEditModal={setShowEditModal} 
                     handleEditInput={handleEditInput} 
                     dark={dark} 
-                    setInputDate={setInputDate}
                   />
                 )
               })}
@@ -55,7 +51,6 @@ function TodoList(props) {
                   setShowEditModal={setShowEditModal} 
                   handleEditInput={handleEditInput} 
                   dark={dark} 
-                  setInputDate={setInputDate}
                 />
                 )
               })}
@@ -72,7 +67,6 @@ function TodoList(props) {
                   setShowEditModal={setShowEditModal} 
                   handleEditInput={handleEditInput} 
                   dark={dark} 
-                  setInputDate={setInputDate}
                 />
                 )
               })}
