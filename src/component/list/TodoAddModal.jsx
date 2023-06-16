@@ -8,7 +8,6 @@ const TodoAddModalWrapper = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* border-bottom: 1px solid #e6e6e6; */
 `;
 
 const TodoAddInput = styled.input`
